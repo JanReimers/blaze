@@ -48,7 +48,7 @@ function(Blaze_Import)
       endif()
    endmacro()
 
-   cmake_minimum_required(VERSION 3.5)
+   cmake_minimum_required(VERSION 3.10)
 
    get_filename_component(Blaze_ROOT_DIR_PATH ${Blaze_Import_DIR_PATH} DIRECTORY)
 
