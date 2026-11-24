@@ -872,11 +872,11 @@ void EigenvalueTest::testSyevx()
          throw std::runtime_error( oss.str() );
       }
 
-      for( size_t i=0UL; i<ZA.rows(); ++i ) {
+      for( size_t i=0UL; i<numA; ++i ) {
          checkEigenvector( row( ZA, i ), S, wA[i] );
       }
 
-      for( size_t i=0UL; i<ZB.columns(); ++i ) {
+      for( size_t i=0UL; i<numB; ++i ) {
          checkEigenvector( column( ZB, i ), S, wB[i] );
       }
    }
@@ -912,11 +912,11 @@ void EigenvalueTest::testSyevx()
          throw std::runtime_error( oss.str() );
       }
 
-      for( size_t i=0UL; i<ZA.rows(); ++i ) {
+      for( size_t i=0UL; i<numA; ++i ) {
          checkEigenvector( row( ZA, i ), S, wA[i] );
       }
 
-      for( size_t i=0UL; i<ZB.columns(); ++i ) {
+      for( size_t i=0UL; i<numB; ++i ) {
          checkEigenvector( column( ZB, i ), S, wB[i] );
       }
    }
@@ -952,11 +952,11 @@ void EigenvalueTest::testSyevx()
          throw std::runtime_error( oss.str() );
       }
 
-      for( size_t i=0UL; i<ZA.rows(); ++i ) {
+      for( size_t i=0UL; i<numA; ++i ) {
          checkEigenvector( row( ZA, i ), S, wA[i] );
       }
 
-      for( size_t i=0UL; i<ZB.columns(); ++i ) {
+      for( size_t i=0UL; i<numB; ++i ) {
          checkEigenvector( column( ZB, i ), S, wB[i] );
       }
    }
@@ -1264,11 +1264,11 @@ void EigenvalueTest::testHeevx()
          throw std::runtime_error( oss.str() );
       }
 
-      for( size_t i=0UL; i<ZA.rows(); ++i ) {
+      for( size_t i=0UL; i<numA; ++i ) {
          checkEigenvector( row( ZA, i ), H, wA[i] );
       }
 
-      for( size_t i=0UL; i<ZB.columns(); ++i ) {
+      for( size_t i=0UL; i<numB; ++i ) {
          checkEigenvector( column( ZB, i ), H, wB[i] );
       }
    }
@@ -1304,11 +1304,11 @@ void EigenvalueTest::testHeevx()
          throw std::runtime_error( oss.str() );
       }
 
-      for( size_t i=0UL; i<ZA.rows(); ++i ) {
+      for( size_t i=0UL; i<numA; ++i ) {
          checkEigenvector( row( ZA, i ), H, wA[i] );
       }
 
-      for( size_t i=0UL; i<ZB.columns(); ++i ) {
+      for( size_t i=0UL; i<numB; ++i ) {
          checkEigenvector( column( ZB, i ), H, wB[i] );
       }
    }
@@ -1344,11 +1344,11 @@ void EigenvalueTest::testHeevx()
          throw std::runtime_error( oss.str() );
       }
 
-      for( size_t i=0UL; i<ZA.rows(); ++i ) {
+      for( size_t i=0UL; i<numA; ++i ) {
          checkEigenvector( row( ZA, i ), H, wA[i] );
       }
 
-      for( size_t i=0UL; i<ZB.columns(); ++i ) {
+      for( size_t i=0UL; i<numB; ++i ) {
          checkEigenvector( column( ZB, i ), H, wB[i] );
       }
    }
@@ -1373,7 +1373,7 @@ void EigenvalueTest::testHeevx()
 // \param A The corresponding dense matrix.
 // \param w The corresponding eigenvalue.
 // \return void
-// \exception std::runtime_error Invalid right eigenvector detected.
+// \exception std::runtime_error Invalid right eigenvector detected (including a zero vector).
 //
 // This function checks the given right eigenvector \f$v[j]\f$ by testing if it satisfies
 
@@ -1388,7 +1388,7 @@ template< typename VT    // Type of the eigenvector v
 void EigenvalueTest::checkEigenvector( const blaze::DenseVector<VT,false>& v,
                                        const blaze::DenseMatrix<MT,SO>& A, ST w )
 {
-   if( A * v != w * v ) {
+   if( isZero( v ) || A * v != w * v ) {
       std::ostringstream oss;
       oss << " Test: " << test_ << "\n"
           << " Error: Invalid right eigenvector detected\n"
@@ -1412,7 +1412,7 @@ void EigenvalueTest::checkEigenvector( const blaze::DenseVector<VT,false>& v,
 // \param A The corresponding dense matrix.
 // \param w The corresponding eigenvalue.
 // \return void
-// \exception std::runtime_error Invalid left eigenvector detected.
+// \exception std::runtime_error Invalid left eigenvector detected (including a zero vector).
 //
 // This function checks the given left eigenvector \f$u[j]\f$ by testing if it satisfies
 
@@ -1427,7 +1427,7 @@ template< typename VT    // Type of the eigenvector u
 void EigenvalueTest::checkEigenvector( const blaze::DenseVector<VT,true>& u,
                                        const blaze::DenseMatrix<MT,SO>& A, ST w )
 {
-   if( u * A != u * w ) {
+   if( isZero( u ) || u * A != u * w ) {
       std::ostringstream oss;
       oss << " Test: " << test_ << "\n"
           << " Error: Invalid left eigenvector detected\n"
