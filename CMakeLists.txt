@@ -31,7 +31,7 @@
 #
 #==================================================================================================
 
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.10)
 
 file(READ ${CMAKE_CURRENT_LIST_DIR}/blaze/system/Version.h BLAZE_VERSION_FILE)
 
