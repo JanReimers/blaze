@@ -467,7 +467,7 @@ inline size_t heevx_backend( DenseMatrix<MT1,SO1>& A, DenseVector<VT,TF>& w,
    const std::unique_ptr<blas_int_t[]> iwork( new blas_int_t[5*n] );
    const std::unique_ptr<blas_int_t[]> ifail( new blas_int_t[n] );
 
-   heevx( 'N', range, uplo, n, (*A).data(), lda, vl, vu, il, iu, BT(0), &m, (*w).data(),
+   heevx( 'V', range, uplo, n, (*A).data(), lda, vl, vu, il, iu, BT(0), &m, (*w).data(),
           (*Z).data(), ldz, work.get(), lwork, rwork.get(), iwork.get(), ifail.get(), &info );
 
    const size_t num( numeric_cast<size_t>( m ) );

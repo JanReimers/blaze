@@ -459,7 +459,7 @@ inline size_t syevx_backend( DenseMatrix<MT1,SO1>& A, DenseVector<VT,TF>& w,
    const std::unique_ptr<blas_int_t[]> iwork( new blas_int_t[12*n] );
    const std::unique_ptr<blas_int_t[]> ifail( new blas_int_t[n] );
 
-   syevx( 'N', range, uplo, n, (*A).data(), lda, vl, vu, il, iu, ET(0), &m,
+   syevx( 'V', range, uplo, n, (*A).data(), lda, vl, vu, il, iu, ET(0), &m,
           (*w).data(), (*Z).data(), ldz, work.get(), lwork, iwork.get(), ifail.get(), &info );
 
    const size_t num( numeric_cast<size_t>( m ) );
