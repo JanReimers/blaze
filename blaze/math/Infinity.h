@@ -40,6 +40,7 @@
 // Includes
 //*************************************************************************************************
 
+#include <blaze/system/Inline.h>
 #include <blaze/system/Platform.h>
 #include <blaze/util/constraints/Builtin.h>
 #include <blaze/util/Limits.h>
@@ -1077,7 +1078,7 @@ constexpr bool operator!=( const T& lhs, const Infinity& rhs )
 // converted to the corresponding built-in data type and represents its largest possible data
 // value.
 */
-constexpr Infinity inf;
+BLAZE_INLINE_VARIABLE constexpr Infinity inf;
 //*************************************************************************************************
 
 } // namespace blaze

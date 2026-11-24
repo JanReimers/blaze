@@ -36,6 +36,13 @@
 #define _BLAZE_MATH_STORAGEORDER_H_
 
 
+//*************************************************************************************************
+// Includes
+//*************************************************************************************************
+
+#include <blaze/system/Inline.h>
+
+
 namespace blaze {
 
 //=================================================================================================
@@ -68,7 +75,7 @@ namespace blaze {
    blaze::StaticMatrix<int,2UL,3UL,rowMajor> A( { { 1, 2, 3 }, { 4, 5, 6 } } );
    \endcode
 */
-constexpr bool rowMajor = false;
+BLAZE_INLINE_VARIABLE constexpr bool rowMajor = false;
 //*************************************************************************************************
 
 
@@ -96,7 +103,7 @@ constexpr bool rowMajor = false;
    blaze::StaticMatrix<int,2UL,3UL,columnMajor> A( { { 1, 2, 3 }, { 4, 5, 6 } } );
    \endcode
 */
-constexpr bool columnMajor = true;
+BLAZE_INLINE_VARIABLE constexpr bool columnMajor = true;
 //*************************************************************************************************
 
 } // namespace blaze

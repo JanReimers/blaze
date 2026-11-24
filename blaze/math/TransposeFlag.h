@@ -36,6 +36,13 @@
 #define _BLAZE_MATH_TRANSPOSEFLAG_H_
 
 
+//*************************************************************************************************
+// Includes
+//*************************************************************************************************
+
+#include <blaze/system/Inline.h>
+
+
 namespace blaze {
 
 //=================================================================================================
@@ -55,7 +62,7 @@ namespace blaze {
    blaze::StaticVector<int,3UL,columnVector> v{ 1, 2, 3 };
    \endcode
 */
-constexpr bool columnVector = false;
+BLAZE_INLINE_VARIABLE constexpr bool columnVector = false;
 //*************************************************************************************************
 
 
@@ -70,7 +77,7 @@ constexpr bool columnVector = false;
    blaze::StaticVector<int,3UL,rowVector> v{ 1, 2, 3 };
    \endcode
 */
-constexpr bool rowVector = true;
+BLAZE_INLINE_VARIABLE constexpr bool rowVector = true;
 //*************************************************************************************************
 
 } // namespace blaze

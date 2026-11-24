@@ -40,6 +40,7 @@
 // Includes
 //*************************************************************************************************
 
+#include <blaze/system/Inline.h>
 #include <blaze/util/Types.h>
 
 
@@ -74,7 +75,7 @@ using ReductionFlag = size_t;
    v = sum<rowwise>( A );  // Results in ( 7, 1 )
    \endcode
 */
-constexpr ReductionFlag rowwise = 1UL;
+BLAZE_INLINE_VARIABLE constexpr ReductionFlag rowwise = 1UL;
 //*************************************************************************************************
 
 
@@ -94,7 +95,7 @@ constexpr ReductionFlag rowwise = 1UL;
    v = sum<columnwise>( A );  // Results in ( 2, 1, 5 )
    \endcode
 */
-constexpr ReductionFlag columnwise = 0UL;
+BLAZE_INLINE_VARIABLE constexpr ReductionFlag columnwise = 0UL;
 //*************************************************************************************************
 
 } // namespace blaze

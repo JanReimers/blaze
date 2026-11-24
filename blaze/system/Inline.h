@@ -43,6 +43,7 @@
 //=================================================================================================
 
 #include <blaze/config/Inline.h>
+#include <blaze/system/Standard.h>
 
 
 
@@ -83,6 +84,33 @@
 #  define BLAZE_ALWAYS_INLINE __attribute__((always_inline)) inline
 #else
 #  define BLAZE_ALWAYS_INLINE BLAZE_STRONG_INLINE
+#endif
+//*************************************************************************************************
+
+
+
+
+//=================================================================================================
+//
+//  BLAZE_INLINE_VARIABLE KEYWORD
+//
+//=================================================================================================
+
+//*************************************************************************************************
+/*!\def BLAZE_INLINE_VARIABLE
+// \brief The \c inline specifier for namespace-scope constants (C++17 inline variables).
+// \ingroup system
+//
+// A namespace-scope \c constexpr variable has internal linkage, so every translation unit holds
+// its own copy and a C++20 module cannot export it (e.g. \c export \c using \c blaze::rowMajor).
+// In C++17 and later mode the public constants (\c rowMajor, \c columnVector, \c inf, ...) are
+// declared \c inline, which gives them external linkage and one definition program-wide.  In
+// C++14 mode, which has no inline variables, the macro expands to nothing.
+*/
+#if BLAZE_CPP17_MODE
+#  define BLAZE_INLINE_VARIABLE inline
+#else
+#  define BLAZE_INLINE_VARIABLE
 #endif
 //*************************************************************************************************
 
