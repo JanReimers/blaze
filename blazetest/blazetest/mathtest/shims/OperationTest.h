@@ -81,6 +81,7 @@ class OperationTest
    /*!\name Test functions */
    //@{
    void testSign();
+   void testConj();
    void testNextMultiple();
    void testPrevMultiple();
    //@}
