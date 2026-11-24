@@ -40,6 +40,7 @@
 // Includes
 //*************************************************************************************************
 
+#include <blaze/system/Inline.h>
 #include <blaze/util/constraints/FloatingPoint.h>
 #include <blaze/util/Limits.h>
 
@@ -903,7 +904,7 @@ constexpr bool operator>=( const T& lhs, const Epsilon& /*rhs*/ )
 // It is implicitly converted to the corresponding floating point data type and represents
 // the smallest possible difference between two values of the according data type.
 */
-constexpr Epsilon epsilon;
+BLAZE_INLINE_VARIABLE constexpr Epsilon epsilon;
 //*************************************************************************************************
 
 } // namespace blaze
