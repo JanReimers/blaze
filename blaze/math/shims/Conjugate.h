@@ -43,6 +43,7 @@
 #include <utility>
 #include <blaze/system/Inline.h>
 #include <blaze/util/EnableIf.h>
+#include <blaze/util/typetraits/IsComplex.h>
 #include <blaze/util/typetraits/IsNumeric.h>
 
 
@@ -71,15 +72,36 @@ namespace blaze {
    \endcode
 
 // Values of built-in data type are considered complex numbers with an imaginary part of 0. Thus
-// the returned value corresponds to the given value. For more information on complex conjugates,
+// the returned value corresponds to the given value (complex values are handled by the
+// overload below). For more information on complex conjugates,
 // see
 //
 //       https://en.wikipedia.org/wiki/Complex_conjugate
 */
-template< typename T, EnableIf_t< IsNumeric_v<T> >* = nullptr >
+template< typename T, EnableIf_t< IsNumeric_v<T> && !IsComplex_v<T> >* = nullptr >
 BLAZE_ALWAYS_INLINE constexpr T conj( const T& a ) noexcept
 {
    return a;
+}
+//*************************************************************************************************
+
+
+//*************************************************************************************************
+/*!\brief Computing the conjugate of the given complex value.
+// \ingroup math_shims
+//
+// \param a The given complex value.
+// \return The complex conjugate of the given value.
+//
+// This overload makes a qualified call such as \c blaze::conj(a) conjugate a complex value.
+// IsNumeric also holds for complex types, so without it a qualified call picked the overload
+// for built-in values above and returned \a a unchanged.  (An unqualified call found
+// \c std::conj by argument-dependent lookup and was correct.)
+*/
+template< typename T, EnableIf_t< IsComplex_v<T> >* = nullptr >
+BLAZE_ALWAYS_INLINE constexpr T conj( const T& a ) noexcept
+{
+   return T( a.real(), -a.imag() );
 }
 //*************************************************************************************************
 

@@ -41,9 +41,11 @@
 #include <iostream>
 #include <sstream>
 #include <stdexcept>
+#include <blaze/math/shims/Conjugate.h>
 #include <blaze/math/shims/NextMultiple.h>
 #include <blaze/math/shims/PrevMultiple.h>
 #include <blaze/math/shims/Sign.h>
+#include <blaze/util/Complex.h>
 #include <blazetest/mathtest/shims/OperationTest.h>
 
 
@@ -67,6 +69,7 @@ namespace shims {
 OperationTest::OperationTest()
 {
    testSign();
+   testConj();
    testNextMultiple();
    testPrevMultiple();
 }
@@ -176,6 +179,66 @@ void OperationTest::testSign()
           << "   sign(  0.0L ) = " << sign(  0.0L ) << " (expected  0)\n"
           << "   sign( -1.0L ) = " << sign( -1.0L ) << " (expected -1)\n";
       throw std::runtime_error( oss.str() );
+   }
+}
+//*************************************************************************************************
+
+
+//*************************************************************************************************
+/*!\brief Test of the mathematical 'conj' shim.
+//
+// \return void
+// \exception std::runtime_error Error detected.
+//
+// This function performs a test of the mathematical 'conj' shim, called qualified (the call that
+// does not find std::conj by argument-dependent lookup). In case an error is detected, a
+// \a std::runtime_error exception is thrown.
+*/
+void OperationTest::testConj()
+{
+   test_ = "conj() shim";
+
+   // 'int' and 'double'
+   if( blaze::conj( 2 ) != 2 || blaze::conj( -1.5 ) != -1.5 ) {
+      std::ostringstream oss;
+      oss << " Test: " << test_ << "\n"
+          << " Error: conj() with a built-in type failed\n"
+          << " Details:\n"
+          << "   conj(    2 ) = " << blaze::conj( 2 ) << " (expected 2)\n"
+          << "   conj( -1.5 ) = " << blaze::conj( -1.5 ) << " (expected -1.5)\n";
+      throw std::runtime_error( oss.str() );
+   }
+
+   // 'complex<double>' and 'complex<float>'
+   {
+      const blaze::complex<double> a( 1.0, 2.0 );
+      const blaze::complex<float>  b( 3.0F, -4.0F );
+
+      if( blaze::conj( a ) != blaze::complex<double>( 1.0, -2.0 ) ||
+          blaze::conj( b ) != blaze::complex<float>( 3.0F, 4.0F ) ) {
+         std::ostringstream oss;
+         oss << " Test: " << test_ << "\n"
+             << " Error: conj() with a complex type failed\n"
+             << " Details:\n"
+             << "   conj( " << a << " ) = " << blaze::conj( a ) << " (expected (1,-2))\n"
+             << "   conj( " << b << " ) = " << blaze::conj( b ) << " (expected (3,4))\n";
+         throw std::runtime_error( oss.str() );
+      }
+   }
+
+   // In-place conjugation
+   {
+      blaze::complex<double> a( 1.0, 2.0 );
+      blaze::conjugate( a );
+
+      if( a != blaze::complex<double>( 1.0, -2.0 ) ) {
+         std::ostringstream oss;
+         oss << " Test: " << test_ << "\n"
+             << " Error: conjugate() with a complex type failed\n"
+             << " Details:\n"
+             << "   Result: " << a << " (expected (1,-2))\n";
+         throw std::runtime_error( oss.str() );
+      }
    }
 }
 //*************************************************************************************************
