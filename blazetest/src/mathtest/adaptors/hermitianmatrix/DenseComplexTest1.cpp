@@ -168,6 +168,48 @@ void DenseComplexTest::testConstructors()
    }
 
 
+   // Homogeneous initialization
+   {
+      test_ = "Row-major HermitianMatrix homogeneous initialization constructor";
+
+      const HT herm( 3UL, cplx(2,0) );
+
+      checkRows    ( herm, 3UL );
+      checkColumns ( herm, 3UL );
+      checkCapacity( herm, 9UL );
+      checkNonZeros( herm, 9UL );
+
+      if( herm(0,0) != cplx(2,0) || herm(0,1) != cplx(2,0) || herm(0,2) != cplx(2,0) ||
+          herm(1,0) != cplx(2,0) || herm(1,1) != cplx(2,0) || herm(1,2) != cplx(2,0) ||
+          herm(2,0) != cplx(2,0) || herm(2,1) != cplx(2,0) || herm(2,2) != cplx(2,0) ) {
+         std::ostringstream oss;
+         oss << " Test: " << test_ << "\n"
+             << " Error: Construction failed\n"
+             << " Details:\n"
+             << "   Result:\n" << herm << "\n"
+             << "   Expected result:\n( (2,0) (2,0) (2,0) )\n( (2,0) (2,0) (2,0) )\n( (2,0) (2,0) (2,0) )\n";
+         throw std::runtime_error( oss.str() );
+      }
+   }
+
+   // Homogeneous initialization (non-real value)
+   {
+      test_ = "Row-major HermitianMatrix homogeneous initialization constructor (non-real value)";
+
+      try {
+         HT herm( 3UL, cplx(2,1) );
+
+         std::ostringstream oss;
+         oss << " Test: " << test_ << "\n"
+             << " Error: Setup of non-Hermitian HermitianMatrix succeeded\n"
+             << " Details:\n"
+             << "   Result:\n" << herm << "\n";
+         throw std::runtime_error( oss.str() );
+      }
+      catch( std::invalid_argument& ) {}
+   }
+
+
    //=====================================================================================
    // Row-major list initialization
    //=====================================================================================
@@ -677,6 +719,47 @@ void DenseComplexTest::testConstructors()
       checkColumns ( herm, 2UL );
       checkCapacity( herm, 4UL );
       checkNonZeros( herm, 0UL );
+   }
+
+
+   // Homogeneous initialization
+   {
+      test_ = "Column-major HermitianMatrix homogeneous initialization constructor";
+
+      OHT herm( 3UL, cplx(2,0) );
+
+      checkRows    ( herm, 3UL );
+      checkColumns ( herm, 3UL );
+      checkNonZeros( herm, 9UL );
+
+      if( herm(0,0) != cplx(2,0) || herm(0,1) != cplx(2,0) || herm(0,2) != cplx(2,0) ||
+          herm(1,0) != cplx(2,0) || herm(1,1) != cplx(2,0) || herm(1,2) != cplx(2,0) ||
+          herm(2,0) != cplx(2,0) || herm(2,1) != cplx(2,0) || herm(2,2) != cplx(2,0) ) {
+         std::ostringstream oss;
+         oss << " Test: " << test_ << "\n"
+             << " Error: Construction failed\n"
+             << " Details:\n"
+             << "   Result:\n" << herm << "\n"
+             << "   Expected result:\n( (2,0) (2,0) (2,0) )\n( (2,0) (2,0) (2,0) )\n( (2,0) (2,0) (2,0) )\n";
+         throw std::runtime_error( oss.str() );
+      }
+   }
+
+   // Homogeneous initialization (non-real value)
+   {
+      test_ = "Column-major HermitianMatrix homogeneous initialization constructor (non-real value)";
+
+      try {
+         OHT herm( 3UL, cplx(2,1) );
+
+         std::ostringstream oss;
+         oss << " Test: " << test_ << "\n"
+             << " Error: Setup of non-Hermitian HermitianMatrix succeeded\n"
+             << " Details:\n"
+             << "   Result:\n" << herm << "\n";
+         throw std::runtime_error( oss.str() );
+      }
+      catch( std::invalid_argument& ) {}
    }
 
 

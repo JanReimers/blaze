@@ -168,6 +168,31 @@ void DenseRealTest::testConstructors()
    }
 
 
+   // Homogeneous initialization
+   {
+      test_ = "Row-major HermitianMatrix homogeneous initialization constructor";
+
+      const HT herm( 3UL, 2 );
+
+      checkRows    ( herm, 3UL );
+      checkColumns ( herm, 3UL );
+      checkCapacity( herm, 9UL );
+      checkNonZeros( herm, 9UL );
+
+      if( herm(0,0) != 2 || herm(0,1) != 2 || herm(0,2) != 2 ||
+          herm(1,0) != 2 || herm(1,1) != 2 || herm(1,2) != 2 ||
+          herm(2,0) != 2 || herm(2,1) != 2 || herm(2,2) != 2 ) {
+         std::ostringstream oss;
+         oss << " Test: " << test_ << "\n"
+             << " Error: Construction failed\n"
+             << " Details:\n"
+             << "   Result:\n" << herm << "\n"
+             << "   Expected result:\n( 2 2 2 )\n( 2 2 2 )\n( 2 2 2 )\n";
+         throw std::runtime_error( oss.str() );
+      }
+   }
+
+
    //=====================================================================================
    // Row-major list initialization
    //=====================================================================================
@@ -611,6 +636,30 @@ void DenseRealTest::testConstructors()
       checkRows    ( herm, 2UL );
       checkColumns ( herm, 2UL );
       checkNonZeros( herm, 0UL );
+   }
+
+
+   // Homogeneous initialization
+   {
+      test_ = "Column-major HermitianMatrix homogeneous initialization constructor";
+
+      OHT herm( 3UL, 2 );
+
+      checkRows    ( herm, 3UL );
+      checkColumns ( herm, 3UL );
+      checkNonZeros( herm, 9UL );
+
+      if( herm(0,0) != 2 || herm(0,1) != 2 || herm(0,2) != 2 ||
+          herm(1,0) != 2 || herm(1,1) != 2 || herm(1,2) != 2 ||
+          herm(2,0) != 2 || herm(2,1) != 2 || herm(2,2) != 2 ) {
+         std::ostringstream oss;
+         oss << " Test: " << test_ << "\n"
+             << " Error: Construction failed\n"
+             << " Details:\n"
+             << "   Result:\n" << herm << "\n"
+             << "   Expected result:\n( 2 2 2 )\n( 2 2 2 )\n( 2 2 2 )\n";
+         throw std::runtime_error( oss.str() );
+      }
    }
 
 
