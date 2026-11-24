@@ -733,6 +733,7 @@ class SymmetricMatrix<MT,SO,true,true>
    //@{
             inline SymmetricMatrix();
    explicit inline SymmetricMatrix( size_t n );
+            inline SymmetricMatrix( size_t n, const ElementType& init );
             inline SymmetricMatrix( initializer_list< initializer_list<ElementType> > list );
 
    template< typename Other >
@@ -973,6 +974,30 @@ template< typename MT  // Type of the adapted dense matrix
         , bool SO >    // Storage order of the adapted dense matrix
 inline SymmetricMatrix<MT,SO,true,true>::SymmetricMatrix( size_t n )
    : matrix_( n, n, ElementType() )  // The adapted dense matrix
+{
+   BLAZE_CONSTRAINT_MUST_BE_RESIZABLE_TYPE( MT );
+
+   BLAZE_INTERNAL_ASSERT( isSquare( matrix_ ), "Non-square symmetric matrix detected" );
+   BLAZE_INTERNAL_ASSERT( isIntact(), "Broken invariant detected" );
+}
+/*! \endcond */
+//*************************************************************************************************
+
+
+//*************************************************************************************************
+/*! \cond BLAZE_INTERNAL */
+/*!\brief Constructor for a homogenous initialization of all \f$ n \times n \f$ matrix elements.
+//
+// \param n The number of rows and columns of the matrix.
+// \param init The initial value of the matrix elements.
+//
+// All matrix elements are initialized with the specified value, which is symmetric for any
+// \a init.
+*/
+template< typename MT  // Type of the adapted dense matrix
+        , bool SO >    // Storage order of the adapted dense matrix
+inline SymmetricMatrix<MT,SO,true,true>::SymmetricMatrix( size_t n, const ElementType& init )
+   : matrix_( n, n, init )  // The adapted dense matrix
 {
    BLAZE_CONSTRAINT_MUST_BE_RESIZABLE_TYPE( MT );
 

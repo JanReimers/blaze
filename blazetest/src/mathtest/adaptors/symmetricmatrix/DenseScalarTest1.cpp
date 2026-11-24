@@ -170,6 +170,31 @@ void DenseScalarTest::testConstructors()
    }
 
 
+   // Homogeneous initialization
+   {
+      test_ = "Row-major SymmetricMatrix homogeneous initialization constructor";
+
+      const ST sym( 3UL, 2 );
+
+      checkRows    ( sym, 3UL );
+      checkColumns ( sym, 3UL );
+      checkCapacity( sym, 9UL );
+      checkNonZeros( sym, 9UL );
+
+      if( sym(0,0) != 2 || sym(0,1) != 2 || sym(0,2) != 2 ||
+          sym(1,0) != 2 || sym(1,1) != 2 || sym(1,2) != 2 ||
+          sym(2,0) != 2 || sym(2,1) != 2 || sym(2,2) != 2 ) {
+         std::ostringstream oss;
+         oss << " Test: " << test_ << "\n"
+             << " Error: Construction failed\n"
+             << " Details:\n"
+             << "   Result:\n" << sym << "\n"
+             << "   Expected result:\n( 2 2 2 )\n( 2 2 2 )\n( 2 2 2 )\n";
+         throw std::runtime_error( oss.str() );
+      }
+   }
+
+
    //=====================================================================================
    // Row-major list initialization
    //=====================================================================================
@@ -613,6 +638,30 @@ void DenseScalarTest::testConstructors()
       checkRows    ( sym, 2UL );
       checkColumns ( sym, 2UL );
       checkNonZeros( sym, 0UL );
+   }
+
+
+   // Homogeneous initialization
+   {
+      test_ = "Column-major SymmetricMatrix homogeneous initialization constructor";
+
+      OST sym( 3UL, 2 );
+
+      checkRows    ( sym, 3UL );
+      checkColumns ( sym, 3UL );
+      checkNonZeros( sym, 9UL );
+
+      if( sym(0,0) != 2 || sym(0,1) != 2 || sym(0,2) != 2 ||
+          sym(1,0) != 2 || sym(1,1) != 2 || sym(1,2) != 2 ||
+          sym(2,0) != 2 || sym(2,1) != 2 || sym(2,2) != 2 ) {
+         std::ostringstream oss;
+         oss << " Test: " << test_ << "\n"
+             << " Error: Construction failed\n"
+             << " Details:\n"
+             << "   Result:\n" << sym << "\n"
+             << "   Expected result:\n( 2 2 2 )\n( 2 2 2 )\n( 2 2 2 )\n";
+         throw std::runtime_error( oss.str() );
+      }
    }
 
 

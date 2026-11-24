@@ -64,6 +64,7 @@
 #include <blaze/math/InitializerList.h>
 #include <blaze/math/InversionFlag.h>
 #include <blaze/math/shims/Conjugate.h>
+#include <blaze/math/shims/IsReal.h>
 #include <blaze/math/shims/IsZero.h>
 #include <blaze/math/SIMD.h>
 #include <blaze/math/typetraits/IsComputation.h>
@@ -734,6 +735,7 @@ class HermitianMatrix<MT,SO,true>
    //@{
             inline HermitianMatrix();
    explicit inline HermitianMatrix( size_t n );
+            inline HermitianMatrix( size_t n, const ElementType& init );
             inline HermitianMatrix( initializer_list< initializer_list<ElementType> > list );
 
    template< typename Other >
@@ -991,6 +993,36 @@ inline HermitianMatrix<MT,SO,true>::HermitianMatrix( size_t n )
    : matrix_( n, n, ElementType() )  // The adapted dense matrix
 {
    BLAZE_CONSTRAINT_MUST_BE_RESIZABLE_TYPE( MT );
+
+   BLAZE_INTERNAL_ASSERT( isSquare( matrix_ ), "Non-square Hermitian matrix detected" );
+   BLAZE_INTERNAL_ASSERT( isIntact(), "Broken invariant detected" );
+}
+/*! \endcond */
+//*************************************************************************************************
+
+
+//*************************************************************************************************
+/*! \cond BLAZE_INTERNAL */
+/*!\brief Constructor for a homogenous initialization of all \f$ n \times n \f$ matrix elements.
+//
+// \param n The number of rows and columns of the matrix.
+// \param init The initial value of the matrix elements.
+// \exception std::invalid_argument Invalid setup of Hermitian matrix.
+//
+// All matrix elements are initialized with the specified value.  The result is Hermitian only
+// if \a init equals its own conjugate, i.e. if its imaginary part is zero; otherwise a
+// \a std::invalid_argument exception is thrown.
+*/
+template< typename MT  // Type of the adapted dense matrix
+        , bool SO >    // Storage order of the adapted dense matrix
+inline HermitianMatrix<MT,SO,true>::HermitianMatrix( size_t n, const ElementType& init )
+   : matrix_( n, n, init )  // The adapted dense matrix
+{
+   BLAZE_CONSTRAINT_MUST_BE_RESIZABLE_TYPE( MT );
+
+   if( !isReal( init ) ) {
+      BLAZE_THROW_INVALID_ARGUMENT( "Invalid setup of Hermitian matrix" );
+   }
 
    BLAZE_INTERNAL_ASSERT( isSquare( matrix_ ), "Non-square Hermitian matrix detected" );
    BLAZE_INTERNAL_ASSERT( isIntact(), "Broken invariant detected" );
